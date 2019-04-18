@@ -16,7 +16,7 @@ export default class CardList extends Component {
                     key={album.id}
                     >
                         {console.log(album)}
-                    {bottomView}
+                    {bottomView(album)}
                 </Card>
             )
         })

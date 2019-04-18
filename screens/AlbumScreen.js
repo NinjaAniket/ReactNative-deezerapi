@@ -22,10 +22,8 @@ export default class LinksScreen extends React.Component {
   this.renderIcons = this.renderIcons.bind(this);
   }
 
-  renderIcons() {
-
+  renderIcons(albumInfo) {
     return (
-
     <View style={styles.iconStyles}>
          <Icon
             raised
@@ -43,7 +41,7 @@ export default class LinksScreen extends React.Component {
         />
 
 
-         <Icon onPress={() => {this.props.navigation.navigate('DetailScreen')}}
+         <Icon onPress={() => {this.props.navigation.navigate('DetailScreen', {albumInfo})}}
             raised
             name='headset'
             type='ionicons'
@@ -56,17 +54,13 @@ export default class LinksScreen extends React.Component {
  //search tracks
   searchTracks(artist) {
     this.setState({isFetching: true, albums: []});
-    
+  
     actions.searchTracks(artist)
     .then((albums) => this.setState({albums, isFetching: false}))
     .catch(err => this.setState({albums: [], isFetching: false}))
   }
 
-  componentWillMount() {
-    if (this.state.isFetching === true && this.state.albums.length === 0) {
-      return <Text>NOt found</Text>
-    }
-  }
+ 
 
   renderAlbumView() {
     const  {albums, isFetching} = this.state;
@@ -80,7 +74,7 @@ export default class LinksScreen extends React.Component {
          data={albums} 
          imageKey={'cover_medium'}
          titleKey={'title'}
-         bottomView={this.renderIcons()}
+         bottomView={this.renderIcons}
          // id={'id'}
          />
         }
@@ -95,7 +89,6 @@ export default class LinksScreen extends React.Component {
     );
   }
   render() {
-    
     return this.renderAlbumView();
   }
 }
