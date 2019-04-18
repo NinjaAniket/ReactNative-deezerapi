@@ -19,11 +19,43 @@ export default class LinksScreen extends React.Component {
       isFetching: false
     }
        
-
+  this.renderIcons = this.renderIcons.bind(this);
   }
 
+  renderIcons() {
+
+    return (
+
+    <View style={styles.iconStyles}>
+         <Icon
+            raised
+            name='heartbeat'
+            type='font-awesome'
+            color='#f50'
+            onPress={() => console.log('hello')} /> 
+
+         <Icon onPress={() => {}}
+            raised
+            name='thumbs-up'
+            type='font-awesome'
+            color='#f50'
+            size={30}
+        />
+
+
+         <Icon onPress={() => {this.props.navigation.navigate('DetailScreen')}}
+            raised
+            name='headset'
+            type='ionicons'
+            color='#f50'
+            size={30}
+        />
+    </View>
+  )
+}
+ //search tracks
   searchTracks(artist) {
-    this.setState({isFetching: true});
+    this.setState({isFetching: true, albums: []});
     
     actions.searchTracks(artist)
     .then((albums) => this.setState({albums, isFetching: false}))
@@ -46,8 +78,9 @@ export default class LinksScreen extends React.Component {
         {albums.length > 0 && !isFetching &&
          <CardList 
          data={albums} 
-         imageKey={'cover_big'}
-         title={'title'}
+         imageKey={'cover_medium'}
+         titleKey={'title'}
+         bottomView={this.renderIcons()}
          // id={'id'}
          />
         }
@@ -82,5 +115,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10
+  },
+  iconStyles: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   }
 });
